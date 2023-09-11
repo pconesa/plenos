@@ -94,7 +94,7 @@ class Voting(models.Model):
 
         fromValue = 0.
 
-        for vote in Vote.objects.filter(voting_id=self.id).values("positive")\
+        for vote in Vote.objects.filter(voting_id=self.id).order_by("positive").values("positive")\
                 .annotate(num_votes=Count("positive")):
             num_votes=vote['num_votes']
             percentage= round(100 *num_votes/self.maxVotes, 2)
