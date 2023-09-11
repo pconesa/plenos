@@ -1,0 +1,10 @@
+<div class="pie-chart" style="background: conic-gradient(
+    {% for value, count in voting.getResults.items %}
+        {{ value | yesno:"green,red,orange"}} {{ count.0 }}% {{ count.1 }}%{{ value|yesno:"&#44;,&#44;,"|safe}}
+    {% endfor %});">
+</div>
+<div>
+    {% for value, count in voting.getResults.items %}
+        <h5>{{ value|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }} {{ count.2 }}</h5>
+    {% endfor %}
+</div>

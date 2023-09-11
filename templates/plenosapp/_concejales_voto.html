@@ -1,0 +1,35 @@
+    <!-- politicians section -->
+    <div class="wrap team-wrap" id="team">
+        <div class="grid grid-pad">
+            <div class="content" >
+                <h2>Votos</h2>
+                <div class="col-1-1 mix">
+                    <ul class="filters" >
+                    <li class="filter active" data-filter="all">All</li>
+                        <li class="filter" data-filter=".voteTrue">A FAVOR</li>
+                        <li class="filter" data-filter=".voteFalse">EN CONTRA</li>
+                        <li class="filter" data-filter=".voteNone">ABSTENCION</li>
+                    </ul>
+                </div>
+                <div class="portfolio-items">
+                    {%  for vote in voting.vote_set.all %}
+                    <div class="col-1-4 mix vote{{ vote.positive }}" >
+                        <div class="content staff-content">
+                            <div class="recent-work staff-img">
+                                <div class="img-wrap staff-img">
+                                    <img src="{{ vote.politician.picture.url }}" alt="">
+                                </div>
+                                <div class="work-info staff-info" style="margin:0; background-color: {{ vote.positive|yesno:"green,red,orange" }}">
+                                    <h5 style="margin: 0; line-height: 1em;">{{vote.politician.name}} {{vote.politician.surname}}</h5>
+                                    <h5 style="margin: 0; line-height: 1em;">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABTENCION" }}</h5>
+                                    <h5>{{vote.politician.party.name}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Team Section -->

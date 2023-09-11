@@ -1,0 +1,33 @@
+{%  extends 'plenosapp/_base.html' %}
+{% load static %}
+{% block title %}Pleno de {{ meeting.town.name }} del día {{ meeting.day }} {% endblock %}
+{% block content %}
+    <!-- Parallax Section -->
+    <div class="parallax-section parallax1">
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                 <div class="content content-header" >
+                    <h2>Pleno de {{ meeting.town.name }} del día {{ meeting.day }}</h2>
+                    <p>Mira los detalles del pleno, videos documentos o votaciones.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Parallax Section -->
+
+    <!-- CurveUp -->
+    <svg class="curveUpColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+    </svg>
+
+    {% with video=meeting %}
+    {% include "plenosapp/_youtube_video.html" %}
+    {% endwith %}
+
+    <!-- CurveDown -->
+    <svg class="curveDownColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 0 C 50 100 80 100 100 0 Z"></path>
+    </svg>
+    {% include "plenosapp/_votings.html" with color="grey" %}
+
+{% endblock %}

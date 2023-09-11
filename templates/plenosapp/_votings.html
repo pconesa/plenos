@@ -1,0 +1,29 @@
+{% load static %}
+
+    <!-- Votings Section -->
+    <div class="wrap blog-grid {{ color }}" id="blog">
+        <div class="grid grid-pad">
+            <div class="content" >
+                <h2>Votaciones</h2>
+                {% for voting in votings %}
+                <div class="col-1-2" >
+                    <article class="post-wrap" {% if not color %}style="background-color: #ECF0F1" {% endif %}>
+                        <div class="post-img">
+                            <img src="{% static "/images/post/post-n1.webp" %}" alt="">
+                        </div>
+                        <div class="post">
+                            <h2 class="entry-title">{{ voting.title }}</h2>
+                            <div class="post-meta">
+                                <span class="mid-sep">·</span>
+                            </div>
+                            <h5>{{ voting.description }}</h5>
+                            {% include "plenosapp/_voting_chart.html" %}
+                            <a class="btn read-more" href="{%  url "voting" voting_id=voting.id %}">Saber más</a>
+                        </div>
+                    </article>
+                </div>
+                {%  endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- End Votings Section -->

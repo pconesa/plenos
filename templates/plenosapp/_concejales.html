@@ -1,0 +1,38 @@
+    <!-- politicians section -->
+    <div class="wrap team-wrap" id="team">
+        <div class="grid grid-pad">
+            <div class="content" >
+                <h2>Concejales</h2>
+                <div class="col-1-1 mix">
+                    <ul class="filters" >
+                    <li class="filter active" data-filter="all">All</li>
+                        {% for job in jobs %}
+                        <li class="filter" data-filter=".party{{ job.party.id }}">{{ job.party.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="portfolio-items">
+                    {% for job in jobs %}
+                    <div class="col-1-4 mix party{{ job.party.id }}" >
+                        <div class="content staff-content">
+                            <div class="recent-work staff-img">
+                                <div class="img-wrap staff-img">
+                                    <img src="{{ job.politician.picture.url }}" alt="">
+                                    <div class="team-social">
+                                        <a class="sl-fb" href="{{ job.politician.url }}"><i class="icon-facebook"></i></a>
+    {#                                        <a class="sl-tw" href="#"><i class="icon-twitter"></i></a>#}
+                                    </div>
+                                </div>
+                                <div class="work-info staff-info">
+                                    <h5>{{job.politician.name}} {{job.politician.surname}}</h5>
+                                    <span>{{job.party.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Team Section -->
