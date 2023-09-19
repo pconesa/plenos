@@ -1,7 +1,7 @@
     <!-- Youtube embeded video -->
     <div class="wrap services-wrap" id="services">
         <section class="grid grid-pad services">
-            <p>Video{% if video.youtubeStart != "0" %} (a partir del segundo {{ video.youtubeStart }}){% endif %}</p>
+            <p id="video">Video{% if video.youtubeStart != "0" %} (a partir del segundo {{ video.youtubeStart }}){% endif %}</p>
             <iframe width="560" height="315"
                     src="https://www.youtube.com/embed/{{ video.youtubeId }}?si=VheCKSPQr8AWArjt&start={{ video.youtubeStart }}"
                     title="YouTube video player" frameborder="0"

@@ -42,16 +42,20 @@
                     <div class="col-1-1">
                         <div class="content">
                             <div class="logo-wrap">
-                                <a href="{% url "index" %}" class="logo">Plenos</a>
+                                Plenos
                             </div>
                             <nav class="navigation">
                                 <input type="checkbox" id="nav-button">
                                 <label for="nav-button" onclick></label>
                                 <ul class="nav-container">
                                     <li><a href="{% url "index" %}" class="current">Inicio</a></li>
-                                    <li><a href="{% url "towns" %}">Localidades</a></li>
-                                    <li><a href="{% url "parties" %}">Partidos</a></li>
-                                    <li><a href="#team">Colaboradores</a></li>
+                                    {% block navigation %}
+                                        <li><a href="{% url "search" %}">Localidades</a></li>
+                                        <li><a href="{% url "search" %}">Partidos</a></li>
+                                        <li><a href="{% url "search" %}">Concejales</a></li>
+                                        <li><a href="{% url "contribute" %}">Colaboradores</a></li>
+                                    {%  endblock %}
+
                                     <li><a href="#about">Acerca de</a></li>
                                     <li><a href="#contact">Contacto</a></li>
                                 </ul>
@@ -108,10 +112,10 @@
 {#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
-                <div class="col-2-4" >
+                <div class="col-1-2" >
                     <div class="content">
                         <div class="footer-widget">
-                            <h3>Actividad en Facebook</h3>
+                            <h3 id="contact">Contacta con nosotros</h3>
                             <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61551060811365" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false"><blockquote cite="https://www.facebook.com/profile.php?id=61551060811365" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/profile.php?id=61551060811365">Plenos</a></blockquote></div>
                         </div>
                     </div>
@@ -149,7 +153,7 @@
         <script src="{% static "/js/smoothscroll.js"%}"></script>
         <script src="{% static "/js/jquery.nav.js"%}"></script>
         <script src="{% static "/js/owl-carousel/owl.carousel.min.js"%}"></script>
-        <script src="https://maps.googleapis.com/maps/api/js"></script>
+{#        <script src="https://maps.googleapis.com/maps/api/js"></script>#}
         <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
         <script src="{% static "/js/jquery.counterup.min.js"%}"></script>
         <script src="{% static "/js/lightcase.min.js"%}"></script>

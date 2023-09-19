@@ -1,0 +1,50 @@
+{%  extends 'plenosapp/_base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Parallax Section -->
+    <div class="parallax-section parallax1">
+        <div class="grid grid-pad">
+            <div class="col-1-1">
+                 <div class="content content-header" >
+                    <h2>¿Quieres colaborar?</h2>
+                    <p>Esta web hay que "Alimentarla" con datos cada vez que hay un pleno.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Parallax Section -->
+
+    <!-- CurveUp -->
+    <svg class="curveUpColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+    </svg>
+
+    <!-- Services Section -->
+    <div class="wrap services-wrap" id="services">
+        <section class="grid grid-pad services">
+            <h2>Colabora</h2>
+            <div class="col-1-1 service-box service-1" >
+            <p>Ayuda a tu localidad a conocer mejor lo que esta pasando en el ayuntamiento.</p>
+            <p>Esta web hay que "alimentarla" con los datos de los plenos y sus votaciones.. a continuación te decimos como hacerlo en unos pocos pasos.</p>
+            <h3>1. Contactanos</h3>
+            <p>Mandanos un mensaje a traves de la pagina de <a href="https://www.facebook.com/profile.php?id=61551060811365">plenos de facebook</a> y te ayudaremos a empezar.</p>
+            <h3>2. Crea la localidad</h3>
+            <p>Añade tu localidad al sistema. Naaa! Fácil: un nombre, un enlace a su web y ya está.</p>
+            <h3>3. Define los concejales</h3>
+            <p>Solo es necesario hacerlo una vez, pero puede ser algo tedioso dependiendo del tamaño de la población.
+                Un pueblo pequeño tiene 13 concejales pero ciudades grandes tienen más concejales.</p>
+            <h3>4. Al grano!</h3>
+            <p>Ya teniendo los concejales, y la localidad se pueden añadir los plenos (con sus enlaces a youtube) y las votaciones
+                que ocurrieron durante el pleno y quien votó qué. ¡Van a quedar retratados!</p>
+            </div>
+        </section>
+    </div>
+    <!-- End Services Section -->
+
+    <!-- CurveDown -->
+    <svg class="curveDownColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path d="M0 0 C 50 100 80 100 100 0 Z"></path>
+    </svg>
+
+{% endblock %}

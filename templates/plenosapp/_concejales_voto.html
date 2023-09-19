@@ -1,8 +1,9 @@
+{%  load static %}
     <!-- politicians section -->
     <div class="wrap team-wrap" id="team">
         <div class="grid grid-pad">
             <div class="content" >
-                <h2>Votos</h2>
+                <h2 id="votos">Votos</h2>
                 <div class="col-1-1 mix">
                     <ul class="filters" >
                     <li class="filter active" data-filter="all">All</li>
@@ -17,12 +18,16 @@
                         <div class="content staff-content">
                             <div class="recent-work staff-img">
                                 <div class="img-wrap staff-img">
-                                    <img src="{{ vote.politician.picture.url }}" alt="">
+                                    <img src="{% if vote.job.politician.picture %}
+                                                {{ vote.job.politician.picture.url }}
+                                                {% else %}
+                                                 {% static "/images/team/profile.png"%}
+                                                 {% endif %}" alt="">
                                 </div>
                                 <div class="work-info staff-info" style="margin:0; background-color: {{ vote.positive|yesno:"green,red,orange" }}">
-                                    <h5 style="margin: 0; line-height: 1em;">{{vote.politician.name}} {{vote.politician.surname}}</h5>
-                                    <h5 style="margin: 0; line-height: 1em;">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABTENCION" }}</h5>
-                                    <h5>{{vote.politician.party.name}}</h5>
+                                    <h5 style="margin: 0; line-height: 1em;">{{vote.job.politician.name}} {{vote.job.politician.surname}}</h5>
+                                    <h5 style="margin: 0; line-height: 1em;">{{vote.positive|yesno:"A FAVOR,EN CONTRA,ABTENCION" }}</h5>
+                                    <h5>{{vote.job.politician.party.name}}</h5>
                                 </div>
                             </div>
                         </div>

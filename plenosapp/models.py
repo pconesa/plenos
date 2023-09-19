@@ -34,8 +34,8 @@ class Politician(models.Model):
     """ Politician """
     name = models.CharField(max_length=200)
     surname = models.CharField(max_length=200)
-    picture = models.ImageField(verbose_name="Foto cuadrada", upload_to='politicians/', null=True)
-    url = models.URLField(null=True)
+    picture = models.ImageField(verbose_name="Foto cuadrada", upload_to='politicians/', blank=True, null=True)
+    url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.name} {self.surname}'
@@ -113,10 +113,10 @@ class Voting(models.Model):
 class Vote(models.Model):
     positive = models.BooleanField(null=True)
     voting = models.ForeignKey(Voting, on_delete=models.CASCADE)
-    politician = models.ForeignKey(Politician, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.positive} - {self.politician} - {self.voting}'
+        return f'{self.positive} - {self.job.politician} - {self.voting}'
 
 class Resource(models.Model):
     name = models.CharField(null=False, max_length=100)
