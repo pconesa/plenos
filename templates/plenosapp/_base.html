@@ -9,7 +9,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- favico stuff -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static "apple-touch-icon.png"%}">
+        <link rel="shortcut icon" type="image/ico" href="{%  static "favicon.ico" %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static "favicon32x32.png"%}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static "favicon16x16.png"%}">
+        <link rel="manifest" href="{% static "site.webmanifest"%}">
+        <link rel="mask-icon" href="{% static "safari-pinned-tab.svg"%}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
+
         <title>{% block title %}Plenos | Acercando los plenos{% endblock %}</title>
+
+
         
         <!-- CSS -->
         <link rel="stylesheet" href="{% static "/css/reset.css" %}">
@@ -54,11 +67,10 @@
                                     <li><a href="{% url "index" %}" class="current">Inicio</a></li>
                                     {% block navigation %}
                                         <li><a href="{% url "search" %}">Localidades</a></li>
-                                        <li><a href="{% url "search" %}">Partidos</a></li>
                                         <li><a href="{% url "search" %}">Concejales</a></li>
-                                        <li><a href="{% url "contribute" %}">Colaboradores</a></li>
                                     {%  endblock %}
-
+                                    <li><a href="https://www.facebook.com/share.php?u={{ request.build_absolute_uri }}" target="_blank">Comparte en FB</a></li>
+                                    <li><a href="{% url "contribute" %}">Colabora!</a></li>
                                     <li><a href="#about">Acerca de</a></li>
                                     <li><a href="#contact">Contacto</a></li>
                                 </ul>
