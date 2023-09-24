@@ -1,6 +1,12 @@
 {%  extends 'plenosapp/_base.html' %}
 {% load static %}
 {% block title %}Pleno de {{ meeting.town.name }} del día {{ meeting.day }} {% endblock %}
+{% block navigation %}
+    <li><a href="{% url "town" town_id=meeting.town_id %}">{{ meeting.town.name }}</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#votings">Votaciones</a></li>
+{% endblock %}}
+
 {% block content %}
     <!-- Parallax Section -->
     <div class="parallax-section parallax1">

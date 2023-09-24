@@ -1,0 +1,14 @@
+                <tr class="header">
+                    <th style="width:30%;">Concejal</th>
+                    <th style="width:30%;">Partido</th>
+                    <th style="width:40%;">Localidad</th>
+                </tr>
+                {% for job in jobs %}
+                <tr>
+
+                    <td><a href="{% url "politician" politician_id=job.politician_id %}">{{job.politician}}</a></td>
+                    <td>{{ job.party }}</td>
+                    <td><a href="{% url "town" town_id=job.town_id %}">{{ job.town }}</a></td>
+                </tr>
+                {% endfor %}
+

@@ -18,11 +18,13 @@
                         <div class="content staff-content">
                             <div class="recent-work staff-img">
                                 <div class="img-wrap staff-img">
+                                    <a href="{% url "politician" politician_id=vote.job.politician_id %}">
                                     <img src="{% if vote.job.politician.picture %}
                                                 {{ vote.job.politician.picture.url }}
                                                 {% else %}
                                                  {% static "/images/team/profile.png"%}
                                                  {% endif %}" alt="">
+                                    </a>
                                 </div>
                                 <div class="work-info staff-info" style="margin:0; background-color: {{ vote.positive|yesno:"green,red,orange" }}">
                                     <h5 style="margin: 0; line-height: 1em;">{{vote.job.politician.name}} {{vote.job.politician.surname}}</h5>

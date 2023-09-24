@@ -18,7 +18,9 @@
                         <div class="content staff-content">
                             <div class="recent-work staff-img">
                                 <div class="img-wrap staff-img">
+                                    <a href="{%  url "politician" politician_id=job.politician_id %}">
                                     <img src="{% if job.politician.picture %}{{ job.politician.picture.url }}{% else %}{%  static "images/team/profile.png" %}{% endif %}" alt="">
+                                    </a>
                                     <div class="team-social">
                                         <a class="sl-fb" href="{{ job.politician.url }}"><i class="icon-facebook"></i></a>
     {#                                        <a class="sl-tw" href="#"><i class="icon-twitter"></i></a>#}

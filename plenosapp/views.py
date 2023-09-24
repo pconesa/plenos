@@ -52,7 +52,10 @@ def search(request):
     return render(request, 'plenosapp/search.html', {"jobs":jobs})
 
 def politician(request, politician_id):
-    return HttpResponse("You're looking at the politician %s." % politician_id)
+    politician = get_object_or_404(Politician, pk=politician_id)
+    return render(request, 'plenosapp/politician.html',
+                  {"politician":politician,
+                   })
 
 def contribute(request):
     """ Returns the response for the contribution page  """

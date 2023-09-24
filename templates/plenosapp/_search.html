@@ -1,0 +1,45 @@
+    <script>
+    function searchOnTable() {
+        // Declare variables
+        let input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchTable");
+        trs = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (let i = 0; i < trs.length; i++) {
+            tr = trs[i]
+            tds = tr.getElementsByTagName("td")
+            let rowContent = "";
+            // Cells in row
+            for (let j = 0; j < tds.length; j++) {
+
+                td = tds[j];
+                if (td) {
+                    rowContent += td.textContent || td.innerText;
+                }
+            }
+            if (rowContent.toUpperCase().indexOf(filter) > -1) {
+                tr.style.display = "";
+            } else {
+                tr.style.display = "none";
+            }
+        }
+    }
+    </script>
+    <!-- Search Section -->
+    <div class="wrap">
+        <section class="grid grid-pad">
+            <h2>Busca tu localidad</h2>
+            <input type="text" id="searchBox" onkeyup="searchOnTable()" placeholder="Escribe algo y presiona enter..">
+            <table id="searchTable">
+                {% if towns %}
+                    {%  include "plenosapp/_search_town.html" %}
+                {% else %}
+                    {% include "plenosapp/_search_all.html" %}
+                {% endif %}
+            </table>
+        </section>
+    </div>
+

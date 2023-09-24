@@ -20,58 +20,7 @@
         <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
     </svg>
 
-    <script>
-    function searchOnTable() {
-        // Declare variables
-        let input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchBox");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("searchTable");
-        trs = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (let i = 0; i < trs.length; i++) {
-            tr = trs[i]
-            tds = tr.getElementsByTagName("td")
-            let rowContent = "";
-            // Cells in row
-            for (let j = 0; j < tds.length; j++) {
-
-                td = tds[j];
-                if (td) {
-                    rowContent += td.textContent || td.innerText;
-                }
-            }
-            if (rowContent.toUpperCase().indexOf(filter) > -1) {
-                tr.style.display = "";
-            } else {
-                tr.style.display = "none";
-            }
-        }
-    }
-    </script>
-    <!-- Search Section -->
-    <div class="wrap">
-        <section class="grid grid-pad">
-            <input type="text" id="searchBox" onkeyup="searchOnTable()" placeholder="Escribe algo y presiona enter..">
-
-            <table id="searchTable">
-                <tr class="header">
-                    <th style="width:30%;">Concejal</th>
-                    <th style="width:30%;">Partido</th>
-                    <th style="width:40%;">Localidad</th>
-                </tr>
-                {% for job in jobs %}
-                <tr>
-                    <td><a href="{% url "politician" politician_id=job.politician_id %}">{{job.politician}}</a></td>
-                    <td><a href="{% url "party" party_id=job.party_id %}">{{ job.party }}</a></td>
-                    <td><a href="{% url "town" town_id=job.town_id %}">{{ job.town }}</a></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </section>
-    </div>
-
+    {%  include "plenosapp/_search.html" %}
     <!-- CurveDown -->
     <svg class="curveDownColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">
         <path d="M0 0 C 50 100 80 100 100 0 Z"></path>

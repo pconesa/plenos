@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block navigation %}
+    <li><a href="{% url "town" town_id=voting.meeting.town_id %}">{{ voting.meeting.town.name }}</a></li>
+    <li><a href="{% url "meeting" meeting_id=voting.meeting_id %}">Pleno de {{ voting.meeting.day }}</a></li>
     <li><a href="#description">Descripcion</a></li>
     <li><a href="#video">Video</a></li>
     <li><a href="#results">Resultados</a></li>

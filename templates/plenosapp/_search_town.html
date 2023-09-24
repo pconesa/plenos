@@ -1,0 +1,8 @@
+                <tr class="header">
+                    <th style="width:40%;">Localidad</th>
+                </tr>
+                {% for town in towns %}
+                <tr>
+                    <td><a href="{% url "town" town_id=town.id %}">{{ town }}</a></td>
+                </tr>
+                {% endfor %}
