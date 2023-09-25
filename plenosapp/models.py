@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.db import models
 
 
@@ -92,22 +94,27 @@ class Voting(models.Model):
 
     def getResults(self):
 
-        results = {}
+        results = [0,0,0] # A favor, en contra, abstenciones
         from django.db.models import Count
 
-        fromValue = 0.
         lastValue=None
 
         for vote in Vote.objects.filter(voting_id=self.id).order_by("positive").values("positive")\
                 .annotate(num_votes=Count("positive")):
             lastValue=vote['positive']
             num_votes=vote['num_votes']
-            percentage= round(100 *num_votes/self.maxVotes, 2)
-            results[lastValue] =  (fromValue, fromValue +percentage, num_votes)
+            pos = 0 if lastValue else 2 if lastValue is None else 1
+            results[pos] =  [lastValue, 0,0, num_votes]
+
+        fromValue = 0.
+        for value in results:
+            percentage = round(100 * value[3] / self.maxVotes, 2)
+            value[1]=fromValue
             fromValue +=percentage
+            value[2]=fromValue
 
         # Add the nones
-        results[lastValue]= (fromValue, 100, round((100-fromValue)/(100/self.maxVotes)))
+        results[2]= [None, fromValue, 100, round((100-fromValue)/(100/self.maxVotes))]
 
 
         return results
