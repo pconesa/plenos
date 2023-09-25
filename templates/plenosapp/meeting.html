@@ -13,7 +13,7 @@
         <div class="grid grid-pad">
             <div class="col-1-1">
                  <div class="content content-header" >
-                    <h2>Pleno de {{ meeting.town.name }} del día {{ meeting.day }}</h2>
+                    <h2>Pleno de {{ meeting.town.name }} del día {{ meeting.day|date:"d m y" }}</h2>
                     <p>Mira los detalles del pleno, videos documentos o votaciones.</p>
                 </div>
             </div>

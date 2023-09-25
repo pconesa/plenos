@@ -57,7 +57,7 @@
                             <img src="{% static "/images/work/1-small.jpg" %}" alt="">
                             <div class="overlay">
                                 <span></span>
-                                <h2><a class="img-wrap" href="{% url "meeting" meeting_id=meeting.id%}">Pleno de {{ meeting.day }}</a></h2>
+                                <h2><a class="img-wrap" href="{% url "meeting" meeting_id=meeting.id%}">Pleno de {{ meeting.day|date:"d m y" }}</a></h2>
                             </div>
 
                         </div>

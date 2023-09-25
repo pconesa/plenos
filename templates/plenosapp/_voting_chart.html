@@ -1,6 +1,6 @@
 <div class="pie-chart" style="background: conic-gradient(
     {% for value, count in voting.getResults.items %}
-        {{ value | yesno:"green,red,orange"}} {{ count.0 }}% {{ count.1 }}%{{ value|yesno:"&#44;,&#44;,"|safe}}
+        {{ value | yesno:"green,red,orange"}} {{ count.0 }}% {{ count.1 }}%{%  if not forloop.last %},{% endif %}
     {% endfor %});">
 </div>
 <div>

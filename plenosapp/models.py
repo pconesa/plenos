@@ -61,6 +61,9 @@ class Job(models.Model):
 class Meeting(models.Model):
     """Plenos """
 
+    class Meta:
+        ordering = ['day']
+
     day = models.DateField()
     url = models.URLField(verbose_name="Youtube video url conteniendo 'v='")
     town = models.ForeignKey(Town, on_delete=models.CASCADE)
