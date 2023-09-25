@@ -94,7 +94,7 @@ class Voting(models.Model):
 
     def getResults(self):
 
-        results = [0,0,0] # A favor, en contra, abstenciones
+        results = [[True, 0,0,0],[False,0,0,0],[None,0,0,0]] # A favor, en contra, abstenciones
         from django.db.models import Count
 
         lastValue=None

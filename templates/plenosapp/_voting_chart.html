@@ -4,7 +4,7 @@
     {% endfor %});">
 </div>
 <div>
-    {% for value, count in voting.getResults.items %}
-        <h5>{{ value|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }} {{ count.3 }}</h5>
+    {% for value in voting.getResults %}
+        <h5>{{ value.0|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }} {{ value.3 }}</h5>
     {% endfor %}
 </div>
