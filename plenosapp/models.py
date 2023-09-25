@@ -96,16 +96,18 @@ class Voting(models.Model):
         from django.db.models import Count
 
         fromValue = 0.
+        lastValue=None
 
         for vote in Vote.objects.filter(voting_id=self.id).order_by("positive").values("positive")\
                 .annotate(num_votes=Count("positive")):
+            lastValue=vote['positive']
             num_votes=vote['num_votes']
             percentage= round(100 *num_votes/self.maxVotes, 2)
-            results[vote['positive']] =  (fromValue, fromValue +percentage, num_votes)
+            results[lastValue] =  (fromValue, fromValue +percentage, num_votes)
             fromValue +=percentage
 
         # Add the nones
-        results[None]= (fromValue, 100, round((100-fromValue)/(100/self.maxVotes)))
+        results[lastValue]= (fromValue, 100, round((100-fromValue)/(100/self.maxVotes)))
 
 
         return results
