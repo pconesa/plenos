@@ -31,27 +31,17 @@
                             <img src="{{ politician.picture.url }}" alt="">
                         </div>
                         <div class="post">
-                            <h2 class="entry-title">Su foto</h2>
                             <a href="{% if politician.picture %}{{ politician.picture.url }}{% else %}{%  static "images/team/profile.png" %}{% endif %}">Su página</a>
                         </div>
-                    </article>
-                </div>
-                <div class="col-1-3" >
-                    <article class="post-wrap">
-{#                        <div class="post-img">#}
-{#                            <a href="#0"><img src="{% static "/images/post/post-n2.jpg" %}" alt=""></a>#}
-{#                        </div>#}
-                        <div class="post">
-                            <h2 class="entry-title"><a href="#0">Partidos</a></h2>
-                            <div class="post-meta">
-                                {%  for job in politician.job_set.all %}
-                                    {{ job.start}} - {{ job.end|default_if_none:"Actualidad"}}
-                                    <span class="mid-sep">·</span>
-                                    {{ job.party }}
-                                    <span class="mid-sep">·</span>
-                                    <a href="{% url "town" town_id=job.town_id %}">{{ job.town }}</a>
-                                {% endfor %}
-                            </div>
+                        <h2 class="entry-title"><a href="#0">Partidos</a></h2>
+                        <div class="post-meta">
+                            {%  for job in politician.job_set.all %}
+                                {{ job.start}} - {{ job.end|default_if_none:"Actualidad"}}
+                                <span class="mid-sep">·</span>
+                                {{ job.party }}
+                                <span class="mid-sep">·</span>
+                                <a href="{% url "town" town_id=job.town_id %}">{{ job.town }}</a>
+                            {% endfor %}
                         </div>
                     </article>
                 </div>
@@ -64,7 +54,7 @@
                             <h2 class="entry-title"><a href="#0">Votaciones</a></h2>
                             {% for job in politician.job_set.all %}
                                 {%  for vote in job.vote_set.all %}
-                                    <a href="{% url "voting" voting_id=vote.voting_id %}">{{ vote.voting.title }}</a>: <span style="background-color: {{ vote.positive|yesno:"green,red,orange" }}">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }}</span>
+                                    <a href="{% url "voting" voting_id=vote.voting_id %}">{{ vote.voting.title }}</a>: <span class="vote vote{{ vote.positive|yesno:"True,False,None" }}">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }}</span>
                                 {%  endfor %}
                             {% endfor %}
 
