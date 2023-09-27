@@ -137,6 +137,9 @@ class Resource(models.Model):
     voting = models.ForeignKey(Voting, on_delete=models.CASCADE, blank=True, null=True)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, blank=True, null=True)
 
+    def finalURL(self):
+        return self.url if self.url else self.file.url
+
     def __str__(self):
         fk = self.voting or self.meeting
         return f'{self.name}-{fk}'

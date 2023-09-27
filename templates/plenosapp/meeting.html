@@ -36,4 +36,8 @@
     </svg>
     {% include "plenosapp/_votings.html" with color="grey" %}
 
+    {% with resources=meeting.resource_set.all %}
+    {% include "plenosapp/_resources.html" %}
+    {% endwith %}
+
 {% endblock %}
