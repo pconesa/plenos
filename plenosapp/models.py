@@ -7,7 +7,12 @@ from django.db import models
 from urllib.parse import parse_qs, urlparse
 
 def extractYoutubeId(url):
-    return extractGetParamFromURL(url, 'v')
+    if "youtu.be" in url:
+        # https://youtu.be/qbgSP1SLimg?t=1446
+        o = urlparse(url)
+        return o.path
+    else:
+        return extractGetParamFromURL(url, 'v')
 
 def extractYoutubeStart(url):
     return extractGetParamFromURL(url, 't', default="0")
