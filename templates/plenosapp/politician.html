@@ -54,7 +54,7 @@
                             <h2 class="entry-title"><a href="#0">Votaciones</a></h2>
                             {% for job in politician.job_set.all %}
                                 {%  for vote in job.vote_set.all %}
-                                    <a href="{% url "voting" voting_id=vote.voting_id %}">{{ vote.voting.title }}</a>: <span class="vote vote{{ vote.positive|yesno:"True,False,None" }}">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }}</span>
+                                    <a href="{% url "voting" voting_id=vote.voting_id %}">{{ vote.voting.title }}</a>: <span class="vote vote{{ vote.positive|yesno:"True,False,None" }}">{{ vote.positive|yesno:"A FAVOR,EN CONTRA,ABSTENCION" }}</span><br>
                                 {%  endfor %}
                             {% endfor %}
 
