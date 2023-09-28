@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
@@ -24,6 +24,10 @@ urlpatterns = [
 
     # Colabora
     path('contribute/', views.contribute, name='contribute'),
+
+    # Securized pages
+    path("accounts/login/", auth_views.LoginView.as_view()),
+    path('edit/voting/<int:voting_id>', views.editvoting, name='editvoting'),
 
 ]
 

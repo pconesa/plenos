@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.contrib.auth.decorators import login_required
+from django import forms
 from .models import *
 
 # Create your views here.
@@ -60,3 +62,24 @@ def politician(request, politician_id):
 def contribute(request):
     """ Returns the response for the contribution page  """
     return render(request, 'plenosapp/contribute.html')
+
+
+class VotingForm(forms.ModelForm):
+    class Meta:
+        model = Voting
+        fields= ["title", "description", "meeting"]
+
+# Securized pages
+@login_required
+def editvoting(request, voting_id):
+
+    if voting_id == 0: # New...
+        form = VotingForm()
+    else:
+        # Creating a form to change an existing article.
+        voting = Voting.objects.get(pk=voting_id)
+        form = VotingForm(instance=voting)
+
+    return render(request, 'plenosapp/editvoting.html',
+                  {"form":form,
+                   })
