@@ -69,7 +69,7 @@ class Meeting(models.Model):
     """Plenos """
 
     class Meta:
-        ordering = ['day']
+        ordering = ['-day']
 
     day = models.DateField()
     url = models.URLField(verbose_name="Youtube video url conteniendo 'v='")

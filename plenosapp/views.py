@@ -30,7 +30,7 @@ def town(request, town_id):
     town = get_object_or_404(Town, pk=town_id)
     jobs = Job.objects.filter(town=town_id, end__isnull=True)
     meetings = Meeting.objects.filter(town_id=town_id)
-    votings = Voting.objects.filter(meeting__town=town_id)
+    votings = Voting.objects.filter(meeting__town=town_id).order_by("-id")[:5]
     return render(request, 'plenosapp/town.html',
                   {"town":town,
                    "jobs":jobs,
