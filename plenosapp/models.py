@@ -1,24 +1,11 @@
-from collections import OrderedDict
 
 from django.db import models
+from django.urls import reverse
+from plenos import settings
 
-
-# This may go somewhere else
-from urllib.parse import parse_qs, urlparse
-
-def extractYoutubeId(url):
-    if "youtu.be" in url:
-        # https://youtu.be/qbgSP1SLimg?t=1446
-        o = urlparse(url)
-        return o.path
-    else:
-        return extractGetParamFromURL(url, 'v')
-
-def extractYoutubeStart(url):
-    return extractGetParamFromURL(url, 't', default="0")
-
-def extractGetParamFromURL(url, paramName, default=""):
-    return parse_qs(urlparse(url).query).get(paramName,[default])[0]
+from .utils import extractYoutubeStart, extractYoutubeId
+from django.db.models.signals import post_save
+from .facebook import postOnFacebook
 
 # Create your models here.
 class Party(models.Model):
@@ -89,7 +76,16 @@ class Voting(models.Model):
     description = models.CharField(max_length=2000)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
     maxVotes = models.IntegerField(verbose_name="Número de concejales", default=13)
-    videoUrl = models.URLField(verbose_name="Youtube video url (conteniendo v=) en el momento de la votacion", null=True)
+    videoUrl = models.URLField(verbose_name="YouTube video url (conteniendo v=) en el momento de la votacion", null=True)
+
+    @classmethod
+    def post_create(cls, sender, instance, created, *args, **kwargs):
+        if created:
+            postOnFacebook("Hay una nueva votación del pleno de %s.\n%s:\n%s\n\n¡Échala un ojo aquí!-->%s" %
+                           (instance.meeting,
+                            instance.title, instance.description,
+                            settings.HOST + reverse('voting', urlconf='plenosapp.urls', kwargs={'voting_id': instance.id})
+                            ))
 
     def youtubeId(self):
         return extractYoutubeId(self.videoUrl)
@@ -121,11 +117,14 @@ class Voting(models.Model):
         # Add the nones
         results[2]= [None, fromValue, 100, round((100-fromValue)/(100/self.maxVotes))]
 
-
         return results
 
     def __str__(self):
         return f'{self.title} - {self.meeting}'
+
+# Register binding to "post_save" of voting
+post_save.connect(Voting.post_create, sender=Voting)
+
 
 class Vote(models.Model):
     positive = models.BooleanField(null=True)

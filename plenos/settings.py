@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-uvswn6i-vvv&0op+y3+75l&ak!0&s=vw4^-t1$zq#2xbyt^&a(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["pconesa.pythonanywhere.com","127.0.0.1"]
 
+HOST = "https://" + ALLOWED_HOSTS[1 if DEBUG else 0]
 
 # Application definition
 
@@ -139,3 +140,11 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/admin/login/'
+
+
+# Facebook vars
+FB_PLENOS_APP_ID = os.environ.get("FB_PLENOS_APP_ID",None) # App Id - Identificador de plenos app
+FB_PLENOS_ID = os.environ.get("FB_PLENOS_ID", None) # Page id de plenos
+FB_PLENOS_ACCESS_TOKEN = os.environ.get("FB_PLENOS_ACCESS_TOKEN", None)
+FB_PLENOS_SECRET = os.environ.get("FB_PLENOS_SECRET", None)
+
