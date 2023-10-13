@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{ form }}
-</body>
-</html>
+{%  extends 'plenosapp/_base.html' %}
+{% load static %}
+
+{% block pagetitle %}
+    <h2>Edicion de propuestas</h2>
+    <p>Modifica aqui las propuestas</p>
+{%  endblock %}
+{% block content %}
+    <!-- End Parallax Section -->
+
+    {{ form.as_p }}
+
+{% endblock %}

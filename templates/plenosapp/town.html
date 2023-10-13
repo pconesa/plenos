@@ -8,20 +8,11 @@
     <li><a href="#votings">Votaciones</a></li>
 {% endblock %}}
 
+    {% block pagetitle %}
+    <h2>{{ town.name }}</h2>
+    <p>Actividad politica, partidos, plenos, votaciones. Lo que pasa en {{ town.name }}</p>
+    {% endblock %}
 {% block content %}
-    <!-- Parallax Section -->
-    <div class="parallax-section parallax1">
-        <div class="grid grid-pad">
-            <div class="col-1-1">
-                 <div class="content content-header" >
-                    <h2>{{ town.name }}</h2>
-                    <p>Actividad politica, partidos, plenos, votaciones. Lo que pasa en {{ town.name }}</p>
-{#                    <a target="_blank" class="btn btn-ghost" href="#">Find Out More</a>#}
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Parallax Section -->
 
     <!-- CurveUp -->
     <svg class="curveUpColor" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100" viewBox="0 0 100 100" preserveAspectRatio="none">

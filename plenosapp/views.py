@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.contrib.auth.decorators import login_required
 from django import forms
+
+from .forms import VotingForm
 from .models import *
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+
 
 # custom 404 view
 def custom_404(request, exception):
@@ -55,8 +58,11 @@ def search(request):
 
 def politician(request, politician_id):
     politician = get_object_or_404(Politician, pk=politician_id)
+    currentjob= get_object_or_404(Job.objects.filter(politician=politician, end__isnull=True))
+    analysis = VotingAnalysis(currentjob)
     return render(request, 'plenosapp/politician.html',
                   {"politician":politician,
+                   "analysis": analysis
                    })
 
 def contribute(request):
@@ -64,21 +70,21 @@ def contribute(request):
     return render(request, 'plenosapp/contribute.html')
 
 
-class VotingForm(forms.ModelForm):
-    class Meta:
-        model = Voting
-        fields= ["title", "description", "meeting"]
-
 # Securized pages
 @login_required
 def editvoting(request, voting_id):
 
-    if voting_id == 0: # New...
-        form = VotingForm()
+    if voting_id:
+        voting = get_object_or_404(Voting, pk=voting_id)
     else:
-        # Creating a form to change an existing article.
-        voting = Voting.objects.get(pk=voting_id)
-        form = VotingForm(instance=voting)
+        # New voting
+        voting = Voting()
+
+    form = VotingForm(request.POST or None, instance=voting)
+
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/editvotes/")
 
     return render(request, 'plenosapp/editvoting.html',
                   {"form":form,

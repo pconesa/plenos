@@ -1,9 +1,10 @@
+import datetime
 
 from django.db import models
 from django.urls import reverse
 from plenos import settings
 
-from .utils import extractYoutubeStart, extractYoutubeId
+from .utils import extractYoutubeStart, extractYoutubeId, extractVimeoId, extractVimeoStart
 from django.db.models.signals import post_save
 from .facebook import postOnFacebook
 
@@ -59,14 +60,23 @@ class Meeting(models.Model):
         ordering = ['-day']
 
     day = models.DateField()
-    url = models.URLField(verbose_name="Youtube video url conteniendo 'v='")
+    url = models.URLField(verbose_name="Enlace a YouTube/Vimeo video")
     town = models.ForeignKey(Town, on_delete=models.CASCADE)
 
-    def youtubeId(self):
-        return extractYoutubeId(self.url)
+    def isVimeo(self):
+        return "vimeo" in self.url
 
-    def youtubeStart(self):
-        return extractYoutubeStart(self.url)
+    def videoId(self):
+        if self.isVimeo():
+            return extractVimeoId(self.url)
+        else:
+            return extractYoutubeId(self.url)
+
+    def videoStart(self):
+        if self.isVimeo():
+            return extractVimeoStart(self.url)
+        else:
+            return extractYoutubeStart(self.url)
 
     def __str__(self):
         return f'{self.town} Día {self.day}'
@@ -87,18 +97,25 @@ class Voting(models.Model):
                             settings.HOST + reverse('voting', urlconf='plenosapp.urls', kwargs={'voting_id': instance.id})
                             ))
 
-    def youtubeId(self):
-        return extractYoutubeId(self.videoUrl)
+    def isVimeo(self):
+        return "vimeo" in self.videoUrl
 
-    def youtubeStart(self):
-        return extractYoutubeStart(self.videoUrl)
+    def videoId(self):
+        if self.isVimeo():
+            return extractVimeoId(self.videoUrl)
+        else:
+            return extractYoutubeId(self.videoUrl)
+
+    def videoStart(self):
+        if self.isVimeo():
+            return extractVimeoStart(self.videoUrl)
+        else:
+            return extractYoutubeStart(self.videoUrl)
 
     def getResults(self):
 
         results = [[True, 0,0,0],[False,0,0,0],[None,0,0,0]] # A favor, en contra, abstenciones
         from django.db.models import Count
-
-        lastValue=None
 
         for vote in Vote.objects.filter(voting_id=self.id).order_by("positive").values("positive")\
                 .annotate(num_votes=Count("positive")):
@@ -147,3 +164,106 @@ class Resource(models.Model):
     def __str__(self):
         fk = self.voting or self.meeting
         return f'{self.name}-{fk}'
+
+
+# Politician analysis code
+class VotingAnalysis:
+    def __init__(self, job:Job):
+        self.politician = job.politician
+        self.town = job.town
+
+        """ This will have the following structure:
+        { voting: [ politicianVote, {
+                    party: [true, false, None, Max]}
+        """
+        self._analysis = dict() # Key is the voting id
+        self.similarity = []
+
+        endDate= datetime.datetime.now() if job.end is None else job.end
+        # For each voting in the town
+        for vote in Vote.objects.filter(job__town=self.town, voting__meeting__day__gte=job.start, voting__meeting__day__lte=endDate ):
+            self.registerVote(vote)
+
+        # Summarize
+        self.summarize()
+
+    def getAnalysis(self):
+        return self._analysis
+
+    def getVotingItem(self, voting:Voting):
+        item =  self._analysis.get(voting, None)
+
+        if item is None:
+            item = [None, {}]
+            self._analysis[voting]= item
+
+        return item
+
+    def getPartyCounter(self, votingItem, party):
+
+        votingItemParties = votingItem[1]
+        partyCounter = votingItemParties.get(party,None)
+        if partyCounter is None:
+            partyCounter = [0,0,0,None]
+            votingItemParties[party] = partyCounter
+        return partyCounter
+
+    def registerVote(self, vote:Vote):
+
+        voting = self.getVotingItem(vote.voting)
+
+        # Annotate the vote of the politician
+        if vote.job.politician == self.politician:
+            voting[0]=vote.positive
+
+        # Add the vote to the party counters
+        partyCounter = self.getPartyCounter(voting, vote.job.party)
+
+        if vote.positive == True:
+            partyCounter[0]+=1
+        elif vote.positive == False:
+            partyCounter[1] += 1
+        else:
+            partyCounter[2] += 1
+
+    def summarize(self):
+
+        for voting, votingItem in self._analysis.items():
+
+            for index, (party, partyCounter) in enumerate(votingItem[1].items()):
+                idx = getMaxIndex(partyCounter[:-1])
+                partyFinalVote = True if idx==0 else (False if idx==1 else None)
+                partyCounter[3] = partyFinalVote
+                self.annotateSimilarity(index, partyFinalVote==votingItem[0])
+
+
+        self.annotatePercentage()
+
+    def annotatePercentage(self):
+        count = len(self._analysis)
+        for similarity in self.similarity:
+            similarity[1] = int(100*similarity[0]/count)
+
+    def annotateSimilarity(self, index, matches):
+
+        if len(self.similarity)==index:
+            self.similarity.append([0,0])
+
+        if matches:
+            self.similarity[index][0] += 1
+
+    def getSimilarity(self):
+        """ Returns the similarity in votes of the politician with other parties"""
+        self.similarity
+
+def getMaxIndex(l):
+
+    # Finding maximum element
+    m = max(l)
+
+    # iterating over the list like index,
+    # item pair
+    for i, j in enumerate(l):
+
+        if j == m:
+            return i

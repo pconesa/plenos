@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'plenos.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 # Production DB, for now is a local sqlite
-if not DEBUG:
+if not DEBUG or DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

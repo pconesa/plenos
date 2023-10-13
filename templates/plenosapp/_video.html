@@ -1,0 +1,21 @@
+    <!-- Youtube embeded video -->
+    <div class="wrap services-wrap" id="services">
+        <section class="grid grid-pad services">
+            <p id="video">Video{% if video.videoStart != "0" %} (a partir del segundo {{ video.videoStart }}){% endif %}</p>
+            {% if video.isVimeo %}
+                <div style="padding:56.25% 0 0 0;position:relative;">
+                    <iframe src="https://player.vimeo.com/video/{{ video.videoId }}?h=2df0e7f955&byline=0&portrait=0{{ video.videoStart }}"
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0"
+                            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen>
+                    </iframe>
+                </div><script src="https://player.vimeo.com/api/player.js"></script>
+            {% else %}
+            <iframe width="100%" height="315"
+                    src="https://www.youtube.com/embed/{{ video.videoId }}?si=VheCKSPQr8AWArjt&start={{ video.videoStart }}"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+            </iframe>
+            {% endif %}
+        </section>
+    </div>
