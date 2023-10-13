@@ -66,9 +66,9 @@
                     {% endif %}
                     <TR>
                     <TD><A href="{% url "voting" voting_id=voting.id %}">{{ voting.title }}</A></TD>
-                    <TD class="vote vote{{ votingStats.0|yesno:"True,False,None" }}">{{ votingStats.0 }}</TD>
+                    <TD class="vote vote{{ votingStats.0|yesno:"True,False,None" }}"></TD>
                     {% for party, counts in votingStats.1.items%}
-                        <TD class="vote vote{{ counts.3|yesno:"True,False,None" }}">{{ counts.3}}</TD>
+                        <TD class="vote vote{{ counts.3|yesno:"True,False,None" }}"></TD>
                     {% endfor %}
                     </TR>
                 {% endfor %}
