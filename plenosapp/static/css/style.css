@@ -1746,6 +1746,10 @@ footer p, footer a {
   #price-tables #plans > li:nth-child(2n) {
     margin-right: 0;
   }
+  .stats th{
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
 }
 
 @media handheld, only screen and (max-width: 480px) {
@@ -1810,6 +1814,11 @@ footer p, footer a {
   .team-social a i {
     font-size: 1.5em;
     padding: 8px;
+  }
+
+  .stats th{
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
   }
 }
 

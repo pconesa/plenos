@@ -31,7 +31,7 @@
     <!-- Search Section -->
     <div class="wrap">
         <section class="grid grid-pad">
-            <h2>Busca tu pueblo, Concejal o Partido</h2>
+            <h2>Busca tu localidad{%  if not towns %}, concejal o partido.{% endif %}</h2>
             <input type="text" id="searchBox" onkeyup="searchOnTable()" placeholder="Escribe algo y presiona enter..">
             <table id="searchTable">
                 {% if towns %}

@@ -48,7 +48,7 @@
         <div class="grid grid-pad">
             <div class="content" >
                 <h2 class="entry-title">Votaciones</h2>
-                <TABLE>
+                <TABLE class="stats">
                 <TR><TD>% de Coincidencia</TD><TD></TD>
                 {%  for similarity in analysis.similarity %}
                     <TD>{{ similarity.1 }}% ({{ similarity.0 }})</TD>
@@ -57,15 +57,15 @@
                 {% for voting, votingStats in analysis.getAnalysis.items %}
                     {% if forloop.counter == 1 %}
                        <TR>
-                           <TH><B>VOTACIÓN</B></TH>
-                        <TH><B>VOTO</B></TH>
+                           <TH>VOTACIÓN</TH>
+                        <TH class="stats">Votó</TH>
                         {% for party, counts in votingStats.1.items%}
-                            <TH><b>{{  party.name }}</b></TH>
+                            <TH class="stats">{{  party.name }}</TH>
                         {% endfor %}
                        </TR>
                     {% endif %}
                     <TR>
-                    <TD><A href="{% url "voting" voting_id=voting.id %}">{{ voting.title }}</A></TD>
+                    <TD>* <A href="{% url "voting" voting_id=voting.id %}">{{ voting.title }}</A></TD>
                     <TD class="vote vote{{ votingStats.0|yesno:"True,False,None" }}"></TD>
                     {% for party, counts in votingStats.1.items%}
                         <TD class="vote vote{{ counts.3|yesno:"True,False,None" }}"></TD>
