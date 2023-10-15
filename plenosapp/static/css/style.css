@@ -1746,10 +1746,6 @@ footer p, footer a {
   #price-tables #plans > li:nth-child(2n) {
     margin-right: 0;
   }
-  .stats th{
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-  }
 }
 
 @media handheld, only screen and (max-width: 480px) {
@@ -1815,11 +1811,6 @@ footer p, footer a {
     font-size: 1.5em;
     padding: 8px;
   }
-
-  .stats th{
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-  }
 }
 
 /* Pie chart styles*/
@@ -1883,4 +1874,51 @@ footer p, footer a {
 .voteNone {
   background-color: orange;
   color: black;
+}
+
+
+/* stats table */
+
+.stickyTableContainer {
+  overflow: auto;
+  max-height: 500px ;
+}
+
+.stickyTableContainer th {
+  position: sticky; /* Make th sticky to avoid JavaScript */
+  z-index: 1;
+  border: 1px solid;
+  top: 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.stickyTableContainer td, th {
+  padding: 10px;
+  min-width: 50px; /* Add a minimum width below which no resize is allowed (for small screens). It can be whatever serves the design best */
+  text-align: center;
+}
+
+.stickyTableContainer th {
+  background: #eee;
+  top: -2px; /* We need this to attach the "stuck" attribute */
+}
+.stickyTableContainer th img {
+  height: 0;
+    margin: 0 auto;
+      display: block;
+  transition: height 200ms ease-in-out;
+}
+.sticky img {
+  height: 100px;
+}
+.label {
+  font-weight: bold;
+  text-align: left;
+  min-width: 150px; /* Labels should have a strict width, based on the design (150px is just for this demo) */
+  width: 150px; /* In order to enforce the width we need to apply both a min-width and a width with the same value */
+  background: #eee;
+}
+th.label {
+  background: #fff;
+  border-color: #fff;
 }

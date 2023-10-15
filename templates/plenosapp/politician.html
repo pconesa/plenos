@@ -1,6 +1,6 @@
 {%  extends 'plenosapp/_base.html' %}
 {% load static %}
-
+{%  load plenos_tags %}
 {% block pagetitle %}
     <h2>{{ politician }}</h2>
     <p>Aquí verás su actividad política</p>
@@ -44,25 +44,24 @@
     </div>
     <!-- End Blog Section -->
 
-    <div class="wrap">
+<div class="wrap">
         <div class="grid grid-pad">
-            <div class="content" >
+            <div class="content stickyTableContainer" >
                 <h2 class="entry-title">Votaciones</h2>
+                <p>El % debajo de cada partido es el porcentaje de coincidencia de voto de {{ politician }} con ese partido</p>
+                <p>Código de colores: <span class="voteTrue">A favor</span>, <span class="voteFalse">En contra</span>, <span class="voteNone">Abstención</span></p>
                 <TABLE>
-                <TR><TH>% de Coincidencia</TH><TH></TH><TH> </TH>
-                {%  for similarity in analysis.similarity %}
-                    <TH>{{ similarity.1 }}% ({{ similarity.0 }})</TH>
-                {% endfor %}
-                </TR>
+                  <thead>
                 {% for voting, votingStats in analysis.getAnalysis.items %}
                     {% if forloop.counter == 1 %}
                        <TR>
-                           <TD>VOTACIÓN</TD>
-                        <TH class="stats">Votó</TH><TH>.</TH>
+                        <TH>VOTACIÓN</TH>
+                        <TH class="stats">Votó</TH><TH></TH>
                         {% for party, counts in votingStats.1.items%}
-                            <TH class="stats">{{  party.name }}</TH>
+                            <TH class="stats">{{  party.name }}<br>{{ analysis.similarity|get:forloop.counter0|get:1}}%</TH>
                         {% endfor %}
                        </TR>
+                    </thead>
                     {% endif %}
                     <TR>
                     <TD>* <A href="{% url "voting" voting_id=voting.id %}">{{ voting.title }}</A></TD>
