@@ -94,7 +94,7 @@ class Voting(models.Model):
             postOnFacebook("Hay una nueva votación del pleno de %s.\n%s:\n%s\n\n¡Échala un ojo aquí!-->%s" %
                            (instance.meeting,
                             instance.title, instance.description,
-                            settings.HOST + reverse('voting', urlconf='plenos_tags.py.urls', kwargs={'voting_id': instance.id})
+                            settings.HOST + reverse('voting', urlconf='plenosapp.urls', kwargs={'voting_id': instance.id})
                             ))
 
     def isVimeo(self):
