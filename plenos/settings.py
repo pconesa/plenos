@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-uvswn6i-vvv&0op+y3+75l&ak!0&s=vw4^-t1$zq#2xbyt^&a(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False) =="True"
 
-ALLOWED_HOSTS = ["pconesa.pythonanywhere.com","127.0.0.1"]
+PROD_HOST = "plenos.info"
+
+ALLOWED_HOSTS = [PROD_HOST,"127.0.0.1","pconesa.pythonanywhere.com"]
 
 HOST = "https://" + ALLOWED_HOSTS[1 if DEBUG else 0]
 
